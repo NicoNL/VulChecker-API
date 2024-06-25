@@ -2,12 +2,13 @@ from fastapi import APIRouter , HTTPException, Query
 from .models import PackInfo
 from typing import List
 from datetime import datetime
+from .models import PackInfo
 import requests
 import json
 
 router = APIRouter()
 
-@router.get("/versions", description="GET method to obtain the vulnerabilities of a package in Debian and Ubuntu")
+@router.get("/versions", response_model=PackInfo ,description="GET method to obtain the vulnerabilities of a package in Debian and Ubuntu")
 async def versions(name: str = Query(..., description="Name of the package")):
     
     def getVuls(ecosystem):
@@ -45,11 +46,12 @@ async def versions(name: str = Query(..., description="Name of the package")):
         vuls = getVersions(ubuntu_vuls) + getVersions(debian_vuls)
         
         result = {
-            "package": name,
+            "name": name,
             "versions" : vuls,
             "timestamp" :datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         }
-        return result
+        
+        return PackInfo(**result)
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error: {str(e)}")
