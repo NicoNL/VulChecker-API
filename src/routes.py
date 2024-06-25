@@ -20,8 +20,8 @@ async def versions(name: str = Query(..., description="Name of the package")):
             }
         }
         json_data = json.dumps(payload)
-        response_debian = requests.post(url, data=json_data)
-        data = response_debian.json()
+        response = requests.post(url, data=json_data)
+        data = response.json()
         return data
 
     def getVersions(vuls):
