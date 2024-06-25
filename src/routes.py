@@ -12,6 +12,7 @@ router = APIRouter()
 async def versions(name: str = Query(..., description="Name of the package")):
     
     def getVuls(ecosystem):
+        url = "https://api.osv.dev/v1/query"
         payload = {
             "package": {
                 "name": name,
@@ -37,8 +38,6 @@ async def versions(name: str = Query(..., description="Name of the package")):
         sorted(result, key=LooseVersion)
         return result
 
-    url = "https://api.osv.dev/v1/query"
-
     try:
         ubuntu_vuls = getVuls("Ubuntu").get('vulns', [])
         debian_vuls = getVuls("Debian").get('vulns', [])
@@ -53,7 +52,7 @@ async def versions(name: str = Query(..., description="Name of the package")):
             "versions" : vuls,
             "timestamp" :datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         }
-
         return result
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error: {str(e)}")
