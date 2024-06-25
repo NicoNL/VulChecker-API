@@ -9,7 +9,7 @@ import json
 router = APIRouter()
 
 @router.get("/versions", response_model=PackInfo ,description="GET method to obtain the vulnerabilities of a package in Debian and Ubuntu")
-async def versions(name: str = Query(..., description="Name of the package")):
+def versions(name: str = Query(..., description="Name of the package")):
     
     def getVuls(ecosystem):
         url = "https://api.osv.dev/v1/query"
