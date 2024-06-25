@@ -2,7 +2,6 @@ from fastapi import APIRouter , HTTPException, Query
 from .models import PackInfo
 from typing import List
 from datetime import datetime
-from distutils.version import LooseVersion
 import requests
 import json
 
@@ -19,8 +18,7 @@ async def versions(name: str = Query(..., description="Name of the package")):
                 "ecosystem": ecosystem
             }
         }
-        json_data = json.dumps(payload)
-        response = requests.post(url, data=json_data)
+        response = requests.post(url, json=payload)
         data = response.json()
         return data
 
@@ -35,7 +33,6 @@ async def versions(name: str = Query(..., description="Name of the package")):
                                 result.append(event['fixed'])
 
         result = list(set(result))
-        sorted(result, key=LooseVersion)
         return result
 
     try:
