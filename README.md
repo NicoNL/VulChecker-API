@@ -1,9 +1,8 @@
 # SIMPLE VULNERABILITY CHECKER API
 
 ## Preposition ##
-We have a lot of issues from vulnerable libs on our Linux boxes. 
-We need a service that can generate a list from a database of package(library) versions, that have open vulnerabilities.
-This way we'll know which versions we have to avoid.
+There are a lot of issues from vulnerable libs on  Linux boxes. Therefore, this is  a service that can generate a list from a database of package(library) versions, that have open vulnerabilities. 
+This way is possible to identify which versions we have to avoid.
 ## Requirements ##
 ### Languages ###
 Please implement this in Python or Java. Preferably Python with fastapi framework. 
